@@ -28,7 +28,8 @@ public class Landgenerator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        // update the color of all tiles in the world based on their height
+        UpdateTilesColor();
     }
 
     void SpawnTile(float x, float z, float y)
@@ -50,7 +51,7 @@ public class Landgenerator : MonoBehaviour
         float tileSizeHalf = tileSize / 2;
 
         // get the offset of the tile
-        float tileOffset = tileSize / 25;
+        float tileOffset = 0.0f; //tileSize / 25;
 
         float xPosition = 0;
         float zPosition = 0;
@@ -80,10 +81,10 @@ public class Landgenerator : MonoBehaviour
                     xPosition = (tileSize * x) + tileSizeHalf + (tileOffset * x);
                 }
 
-                zPosition = ((float)(tileSize * z * 0.9));
+                zPosition = tileSize * z * 0.9f;
 
                 // assing yPosition as random number betwen 1 and ySize
-                yPosition = Random.Range(0, ySize) * tileOffset;
+                yPosition = Random.Range(0, ySize) * (tileSize * 0.1f);
 
                 // print in console the x and z position
                 Debug.Log(
@@ -100,4 +101,49 @@ public class Landgenerator : MonoBehaviour
         }
     }
 
+    // update the color of all tiles in the world based on their height
+    void UpdateTilesColor()
+    {
+        // loop through the x axis
+        for (int z = 0; z < wordSizeZ; z++)
+        {
+            // loop through the z axis
+            for (int x = 0; x < wordSizeX; x++)
+            {
+                // get the tile
+                Tile tile = tiles[x, z];
+
+                // get the height of the tile
+                float height = tile.GetHeight();
+
+                // get the color of the tile
+                Color color = tile.GetColor();
+
+                // set the color of the tile based on the height
+                if (height < 0.5f)
+                {
+                    color = Color.blue;
+                }
+                else if (height < 1.0f)
+                {
+                    color = Color.green;
+                }
+                else if (height < 1.5f)
+                {
+                    color = Color.white;
+                }
+                else if (height < 2.0f)
+                {
+                    color = Color.cyan;
+                }
+                else
+                {
+                    color = Color.white;
+                }
+
+                // set the color of the tile
+                tile.SetColor(color);
+            }
+        }
+    }
 }
