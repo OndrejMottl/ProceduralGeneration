@@ -84,7 +84,8 @@ public class Landgenerator : MonoBehaviour
                 zPosition = tileSize * z * 0.9f;
 
                 // assing yPosition as random number betwen 1 and ySize
-                yPosition = Random.Range(0, ySize) * (tileSize * 0.1f);
+                yPosition = CalcNoise(xSize + 1, zSize + 1, x + 1, z + 1, 1.0f) * ySize;
+                // Random.Range(0, ySize) * (tileSize * 0.1f);
 
                 // print in console the x and z position
                 Debug.Log(
@@ -99,6 +100,15 @@ public class Landgenerator : MonoBehaviour
                 tiles[x, z] = newTile;
             }
         }
+    }
+
+    float CalcNoise(float xOrg, float zOrg, float xPosition, float zPosition, float scale)
+    {
+        float xCoord = xOrg / xPosition * scale;
+        float zCoord = zOrg / zPosition * scale;
+        float sample = Mathf.PerlinNoise(xCoord, zCoord);
+
+        return sample;
     }
 
     // update the color of all tiles in the world based on their height
@@ -120,19 +130,19 @@ public class Landgenerator : MonoBehaviour
                 Color color = tile.GetColor();
 
                 // set the color of the tile based on the height
-                if (height < 0.5f)
+                if (height < 2.0f)
                 {
                     color = Color.blue;
                 }
-                else if (height < 1.0f)
+                else if (height < 5.0f)
                 {
                     color = Color.green;
                 }
-                else if (height < 1.5f)
+                else if (height < 8.0f)
                 {
                     color = Color.white;
                 }
-                else if (height < 2.0f)
+                else if (height < 9.0f)
                 {
                     color = Color.cyan;
                 }
