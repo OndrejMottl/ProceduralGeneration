@@ -352,9 +352,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultTile: {fileID: 2274569761052518441, guid: 4f9e795202fde7043ad3c2345c874d7d, type: 3}
-  wordSizeX: 10
-  wordSizeZ: 10
-  wordSizeY: 3
+  wordSizeX: 20
+  wordSizeZ: 20
+  wordSizeY: 10
 --- !u!4 &2097130594
 Transform:
   m_ObjectHideFlags: 0
